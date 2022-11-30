@@ -30,18 +30,3 @@ func Producer(name_queue string, msg string) {
 	//log.Println(" [x] Enviado")
 	conexion.ErrorHanding(err, "Error al publicar mensaje")
 }
-
-func Enviar_mensajes(name_queue string, user string) {
-	reader := bufio.NewReader(os.Stdin)
-	fmt.Println(user, "Escriba mensaje: \n--EXIT")
-	for true {
-		msg, err := reader.ReadString('\n')
-		if err != nil {
-			fmt.Println(err)
-		}
-		Producer(name_queue, user+": "+msg)
-		if strings.Contains(msg, "--EXIT") {
-			break
-		}
-	}
-}
