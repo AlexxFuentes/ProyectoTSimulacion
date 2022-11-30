@@ -5,7 +5,6 @@ import (
 	"bufio"
 	"fmt"
 	"github.com/streadway/amqp"
-	"log"
 	"os"
 	"strings"
 )
@@ -19,7 +18,6 @@ func Producer(name_queue string, msg string) {
 	conexion.ErrorHanding(err, "Failed to open a channel")
 	defer ch.Close()
 
-	//crear una cola para guardar mensajes
 	queue, err := ch.QueueDeclare(name_queue, false, false, false, false, nil)
 	conexion.ErrorHanding(err, "Failed to declare a queue")
 
@@ -29,7 +27,7 @@ func Producer(name_queue string, msg string) {
 			ContentType: "text/plain",
 			Body:        []byte(msg),
 		})
-	log.Println(" [x] Enviado")
+	//log.Println(" [x] Enviado")
 	conexion.ErrorHanding(err, "Error al publicar mensaje")
 }
 

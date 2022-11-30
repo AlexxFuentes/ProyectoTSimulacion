@@ -1,9 +1,7 @@
 package main
 
 import (
-	"amqp/consumer"
 	"amqp/eventos"
-	"amqp/producer"
 	"fmt"
 )
 
@@ -11,7 +9,6 @@ import (
 Proyecto: Centro especializado en atención al cliente  RNP HN
 */
 func main() {
-
 	//Declaracion de variables
 	var (
 		estaciones, duracion, recursos = 0, 0, 0
@@ -22,43 +19,19 @@ func main() {
 	for control_estaciones {
 		fmt.Println("Ingrese el numero de estaciones: ")
 		fmt.Scanln(&estaciones)
-		fmt.Println("Ingrese el numero de recursos: ")
-		fmt.Scanln(&recursos)
 		fmt.Println("Ingrese la duracion de la simulacion (en dias): ")
 		fmt.Scanln(&duracion)
+		fmt.Println("Ingrese el numero de recursos: ")
+		fmt.Scanln(&recursos)
 
-		if estaciones <= 15 && estaciones <= recursos {
+		if estaciones <= 15 && recursos >= estaciones {
 			control_estaciones = false
-		} else if estaciones > 15 || estaciones > recursos {
+		} else if estaciones > 15 || recursos < estaciones {
 			fmt.Println("El numero de estaciones debe de ser menor o igual a 15 y menor o igual que los recursos.")
 		}
 	}
 
-	personas_atendias := eventos.Personas_atendidas(estaciones, recursos)
-	personas_llegaron := eventos.Personas_llegaron()
+	personas_llegaron_dias := eventos.Personas_llegaron(duracion)
+	eventos.Personas_atendidas(estaciones, recursos, duracion, personas_llegaron_dias) //personas_atendias_dias
 
-	if personas_atendias > personas_llegaron {
-		fmt.Println("Todos las personas fueron atendidas!!")
-	} else {
-		fmt.Println("Pacientes No atendidos: ", personas_llegaron-personas_atendias)
-	}
-
-	consumer.Consumer("")
-	for i := 0; i < duracion; i++ {
-		if personas_atendias > personas_llegaron {
-			for i := 0; i < personas_llegaron; i++ {
-				producer.Producer("", "Llega")
-			}
-			consumer.Consumer("")
-		} else if personas_atendias < personas_llegaron {
-			for i := 0; i < personas_llegaron; i++ {
-				if personas_atendias < i {
-					producer.Producer("", "Llega")
-					consumer.Consumer("")
-				} else if i > personas_atendias {
-					producer.Producer("", "Sin atender")
-				}
-			}
-		}
-	}
 }

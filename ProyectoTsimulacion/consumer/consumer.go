@@ -21,9 +21,28 @@ func Consumer(name_queue string) {
 	conexion.ErrorHanding(err, "Failed to register a consume")
 
 	for msj := range msgs {
-		log.Printf(" %s", msj.Body)
+		log.Printf("%s", msj.Body)
 		if err := msj.Ack(false); err != nil {
 			log.Println("no se pudo reconocer el mensaje", err)
 		}
 	}
 }
+
+/**
+
+	bandera := make(chan bool)
+	go func() {
+		for msg := range msgs {
+			log.Printf("mensaje recivido %s", msg.Body)
+			log.Printf("prueba %s", msg.MessageId)
+		}
+	}()
+	<-bandera
+
+for msj := range msgs {
+	log.Printf(" %s", msj.Body)
+	if err := msj.Ack(false); err != nil {
+		log.Println("no se pudo reconocer el mensaje", err)
+	}
+}
+*/
