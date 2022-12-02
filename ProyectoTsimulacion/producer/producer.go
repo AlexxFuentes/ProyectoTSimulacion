@@ -2,11 +2,7 @@ package producer
 
 import (
 	"amqp/conexion"
-	"bufio"
-	"fmt"
 	"github.com/streadway/amqp"
-	"os"
-	"strings"
 )
 
 func Producer(name_queue string, msg string) {

@@ -1,12 +1,13 @@
 package eventos
 
 import (
-	"amqp/consumer"
-	"amqp/producer"
+	//"amqp/consumer"
+	//"amqp/producer"
 	"fmt"
 	"math"
 	"math/rand"
-	"strconv"
+	"time"
+	//"strconv"
 )
 
 /*
@@ -20,7 +21,7 @@ func Frecuencia_personas(intervalo_tiempo int, frecuencia_min float64) int {
 		cont_personas = 0
 		i             = 0
 	)
-	//rand.Seed(time.Now().Unix())
+	rand.NewSource(time.Now().UnixNano())
 	for i < intervalo_tiempo {
 		j := rand.Float64()
 		if j > (1 - frecuencia_min) {
@@ -71,6 +72,7 @@ simulando el tiempo de atencion de una persona.
 Parametros: min= 5, max = 11
 */
 func Tiempo_atencion(min, max int) int {
+	rand.NewSource(time.Now().UnixNano())
 	return rand.Intn(max-min) + min
 }
 
@@ -112,41 +114,41 @@ func Personas_atendidas(estaciones, recursos, dias int, personas_llegaron_dias m
 				min_transcurridos = min
 
 				for estacion := 1; estacion <= cant_estaciones; estacion++ {
-					producer.Producer("Personas_atendidas_dia_"+strconv.Itoa(dia), "Persona atendida en la estacion "+strconv.Itoa(estacion))
+					//producer.Producer("Personas_atendidas_dia_"+strconv.Itoa(dia), "Persona atendida en la estacion "+strconv.Itoa(estacion))
 					if asignar_estacion_personas_dia[estacion] == 0 {
 						asignar_estacion_personas_dia[estacion] = 0
 					} else {
 						asignar_estacion_personas_dia[estacion] -= 1
 					}
 				}
-				consumer.Consumer("Personas_atendidas_dia_" + strconv.Itoa(dia))
+				//consumer.Consumer("Personas_atendidas_dia_" + strconv.Itoa(dia))
 
 			} else if min_transcurridos <= 720 { // cambio de turno desde 360 min hasta 720 min
 				min += Tiempo_atencion(5, 11)
 				min_transcurridos = min
 
 				for estacion := 1; estacion <= cant_estaciones_esp; estacion++ {
-					producer.Producer("Personas_atendidas_dia_"+strconv.Itoa(dia), "Persona atendida en la estacion "+strconv.Itoa(estacion))
+					//producer.Producer("Personas_atendidas_dia_"+strconv.Itoa(dia), "Persona atendida en la estacion "+strconv.Itoa(estacion))
 					if asignar_estacion_personas_dia[estacion] == 0 {
 						asignar_estacion_personas_dia[estacion] = 0
 					} else {
 						asignar_estacion_personas_dia[estacion] -= 1
 					}
 				}
-				consumer.Consumer("Personas_atendidas_dia_" + strconv.Itoa(dia))
+				//consumer.Consumer("Personas_atendidas_dia_" + strconv.Itoa(dia))
 			} else if min_transcurridos <= min_dia { // ultimas horas desde 720 min hasta 777 min
 				min += Tiempo_atencion(5, 11)
 				min_transcurridos = min
 
 				for estacion := 1; estacion <= cant_estaciones; estacion++ {
-					producer.Producer("Personas_atendidas_dia_"+strconv.Itoa(dia), "Persona atendida en la estacion "+strconv.Itoa(estacion))
+					//producer.Producer("Personas_atendidas_dia_"+strconv.Itoa(dia), "Persona atendida en la estacion "+strconv.Itoa(estacion))
 					if asignar_estacion_personas_dia[estacion] == 0 {
 						asignar_estacion_personas_dia[estacion] = 0
 					} else {
 						asignar_estacion_personas_dia[estacion] -= 1
 					}
 				}
-				consumer.Consumer("Personas_atendidas_dia_" + strconv.Itoa(dia))
+				//consumer.Consumer("Personas_atendidas_dia_" + strconv.Itoa(dia))
 			}
 		}
 		fmt.Printf("Estaciones despues de atender a las personas durante el dia %d \n", dia)
