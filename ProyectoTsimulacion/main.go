@@ -11,10 +11,8 @@ Proyecto: Centro especializado en atención al cliente  RNP HN
 func main() {
 	//Declaracion de variables
 	var (
-		estaciones, duracion, recursos = 0, 0, 0
-		control_estaciones             = true
+		estaciones, duracion, recursos, control_estaciones = 0, 0, 0, true
 	)
-
 	//Entrada de datos
 	for control_estaciones {
 		fmt.Println("Ingrese el numero de estaciones: ")
@@ -31,8 +29,6 @@ func main() {
 			fmt.Println("Los recursos deben de ser mayores que las estaciones y menores que el doble de las estaciones.")
 		}
 	}
-
 	personas_llegaron_dias := eventos.Personas_llegaron(duracion)
 	eventos.Personas_atendidas(estaciones, recursos, duracion, personas_llegaron_dias) //personas_atendias_dias
-
 }
