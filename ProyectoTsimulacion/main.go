@@ -4,7 +4,6 @@ import (
 	"amqp/eventos"
 	"fmt"
 )
-
 /*
 Proyecto: Centro especializado en atención al cliente  RNP HN
 */
